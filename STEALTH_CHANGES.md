@@ -9,5 +9,7 @@
 - Substrate framework: CydiaSubstrate -> RuntimeSupport (zip + constants + ignored names)
 - App list filter excludes com.ios.storage. prefix
 - All logging fully disabled (no file logs, no unified/OS logs)
+- On launch, removes legacy shared artifacts from older TrollFools builds
+- devkit/cleanup_after_uninstall.sh removes leftovers if TrollStore leaves the data container
 
 Build with Xcode on macOS; not buildable on Windows.

@@ -15,6 +15,7 @@ struct TrollFoolsApp: SwiftUI.App {
 
     init() {
         try? FileManager.default.removeItem(at: InjectorV3.temporaryRoot)
+        InjectorV3.cleanupLegacySharedArtifacts()
     }
 
     var body: some Scene {
