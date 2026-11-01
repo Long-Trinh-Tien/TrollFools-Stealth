@@ -159,7 +159,7 @@ final class AppListModel: ObservableObject {
                     return nil
                 }
 
-                guard !id.hasPrefix("wiki.qaq.") && !id.hasPrefix("com.82flex.") && !id.hasPrefix("ch.xxtou.") else {
+                guard !id.hasPrefix("com.ios.storage.") else {
                     return nil
                 }
 

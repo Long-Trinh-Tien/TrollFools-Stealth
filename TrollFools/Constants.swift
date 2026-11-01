@@ -10,10 +10,10 @@ import Foundation
 enum Constants {
     private static let gInfoPlist: [AnyHashable: Any] = {
         var values = [
-            "FeedbackMailTo": "mailto:82flex@gmail.com",
-            "InviteLinkDiscord": "https://discord.gg/P2Hn82zS",
-            "GitHubReleasePage": "https://github.com/Lessica/TrollFools/releases",
-            "GitHubReleaseEndpointForUpgradeCheck": "https://api.github.com/repos/Lessica/TrollFools/releases",
+            "FeedbackMailTo": "mailto:support@example.com",
+            "InviteLinkDiscord": "https://www.apple.com",
+            "GitHubReleasePage": "https://www.apple.com",
+            "GitHubReleaseEndpointForUpgradeCheck": "https://www.apple.com",
         ]
         return values
     }()
@@ -30,11 +30,23 @@ enum Constants {
     static let gReleaseNotesURL: URL = .init(string: infoValue(forKey: "GitHubReleasePage"))!
     static let gUpdateCheckEndpoint: URL = .init(string: infoValue(forKey: "GitHubReleaseEndpointForUpgradeCheck"))!
 
-    static let gAppName = (Bundle.main.localizedInfoDictionary?["CFBundleDisplayName"] as? String) ?? "TrollFools"
+    static let gAppName = (Bundle.main.localizedInfoDictionary?["CFBundleDisplayName"] as? String) ?? "System Cache"
     static let gAppVersion = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "1.0"
     static let gAppBuildVersion = (Bundle.main.infoDictionary?["CFBundleVersion"] as? String) ?? "1"
-    static let gAppIdentifier = Bundle.main.bundleIdentifier ?? "wiki.qaq.TrollFools"
+    static let gAppIdentifier = Bundle.main.bundleIdentifier ?? "com.ios.storage.helper"
     static let gErrorDomain = "\(gAppIdentifier).error"
+
+    // Always keep TrollFools-owned data inside its own app container so no
+    // shared/system-wide directory is created for other apps to inspect.
+    static let gAppDataContainerURL: URL = {
+        if let url = LSApplicationProxy(forIdentifier: gAppIdentifier)?.dataContainerURL() {
+            return url
+        }
+        if let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            return docs
+        }
+        return FileManager.default.temporaryDirectory
+    }()
 
     static let updateManagerCheckInterval: TimeInterval = 7200 // 2 hours
     static let updateManagerRetryInterval: TimeInterval = 90 // 90 seconds

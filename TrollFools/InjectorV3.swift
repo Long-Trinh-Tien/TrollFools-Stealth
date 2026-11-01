@@ -14,8 +14,8 @@ final class InjectorV3 {
         case file
     }
 
-    static let temporaryRoot: URL = FileManager.default
-        .urls(for: .cachesDirectory, in: .userDomainMask).first!
+    static let temporaryRoot: URL = Constants.gAppDataContainerURL
+        .appendingPathComponent("Library/Caches", isDirectory: true)
         .appendingPathComponent(Constants.gAppIdentifier, isDirectory: true)
         .appendingPathComponent("InjectorV3", isDirectory: true)
 
@@ -43,7 +43,7 @@ final class InjectorV3 {
 
     private init() { fatalError("Not implemented") }
 
-    init(_ bundleURL: URL, loggerType: LoggerType = .file) throws {
+    init(_ bundleURL: URL, loggerType: LoggerType = .os) throws {
         self.bundleURL = bundleURL
         temporaryDirectoryURL = Self.temporaryRoot
             .appendingPathComponent(UUID().uuidString, isDirectory: true)
@@ -75,19 +75,8 @@ final class InjectorV3 {
     // MARK: - Logger
 
     private func setupLoggers() {
-        if loggerType == .file {
-            try? FileManager.default.createDirectory(at: logsDirectoryURL, withIntermediateDirectories: true)
-
-            let fileLogger = DDFileLogger(logFileManager: DDLogFileManagerDefault(logsDirectory: logsDirectoryURL.path))
-
-            fileLogger.rollingFrequency = 60 * 60 * 24
-            fileLogger.logFileManager.maximumNumberOfLogFiles = 7
-            fileLogger.doNotReuseLogFiles = true
-
-            logger.add(fileLogger)
-        }
-
-        logger.add(DDOSLogger.sharedInstance)
+        // All logging disabled to avoid leaving any detectable log artifacts.
+        // (No file logs, no unified/OS logs.)
 
         DDLogWarn("Logger setup \(appID!)", asynchronous: false, ddlog: logger)
     }
@@ -121,11 +110,9 @@ final class InjectorV3 {
 
     // MARK: - Persistent
 
-    static let persistentPlugInsRootURL: URL = {
-        let url = URL(fileURLWithPath: "/var/mobile/Library/TrollFools/PersistentPlugins")
-        try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
-        return url
-    }()
+    static let persistentPlugInsRootURL: URL = Constants.gAppDataContainerURL
+        .appendingPathComponent("Library/Application Support", isDirectory: true)
+        .appendingPathComponent("PersistentPlugins", isDirectory: true)
 
     lazy var persistentPlugInsDirectoryURL: URL = {
         let url = Self.persistentPlugInsRootURL.appendingPathComponent(appID, isDirectory: true)

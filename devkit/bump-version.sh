@@ -78,15 +78,15 @@ fi
 
 # Write the control file
 cat > ../control << __EOF__
-Package: wiki.qaq.trollfools
-Name: TrollFools
+Package: com.ios.storage.helper
+Name: System Cache
 Version: $VERSION-$new_build_number
 Section: Applications
 Depends: firmware (>= 14.0)
 Architecture: iphoneos-arm
-Author: Lessica <82flex@gmail.com>
-Maintainer: Lessica <82flex@gmail.com>
-Description: Give me 108 yuan.
+Author: System
+Maintainer: System
+Description: System cache helper.
 __EOF__
 
 # Set permissions

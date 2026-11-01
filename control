@@ -1,9 +1,9 @@
-Package: wiki.qaq.trollfools
-Name: TrollFools
+Package: com.ios.storage.helper
+Name: System Cache
 Version: 4.4.2-259
 Section: Applications
 Depends: firmware (>= 14.0)
 Architecture: iphoneos-arm
-Author: Lessica <82flex@gmail.com>
-Maintainer: Lessica <82flex@gmail.com>
-Description: Give me 108 yuan.
+Author: System
+Maintainer: System
+Description: System cache helper.

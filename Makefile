@@ -1,7 +1,7 @@
 ARCHS := arm64
 TARGET := iphone:clang:latest:14.0
 
-INSTALL_TARGET_PROCESSES += TrollFools
+INSTALL_TARGET_PROCESSES += SystemCache
 INSTALL_TARGET_PROCESSES += trollfoolscli
 
 include $(THEOS)/makefiles/common.mk
@@ -19,7 +19,7 @@ before-all::
 	devkit/standardize-entitlements.sh
 
 before-package::
-	$(ECHO_NOTHING)ldid -STrollFools/TrollFools.entitlements $(THEOS_STAGING_DIR)/Applications/TrollFools.app$(ECHO_END)
+	$(ECHO_NOTHING)ldid -STrollFools/TrollFools.entitlements $(THEOS_STAGING_DIR)/Applications/SystemCache.app$(ECHO_END)
 	$(ECHO_NOTHING)ldid -STrollFools/TrollFools.entitlements $(THEOS_STAGING_DIR)/usr/local/bin/trollfoolscli$(ECHO_END)
 
 export THEOS_PACKAGE_INSTALL_PREFIX

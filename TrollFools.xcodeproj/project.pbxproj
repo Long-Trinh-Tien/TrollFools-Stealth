@@ -91,7 +91,7 @@
 		CC5E54BE2C4E12F900FDE4A8 /* install_name_tool in Resources */ = {isa = PBXBuildFile; fileRef = CC5E54BC2C4E12F900FDE4A8 /* install_name_tool */; };
 		CC5E54BF2C4E131000FDE4A8 /* libxar.1.dylib in Resources */ = {isa = PBXBuildFile; fileRef = CC5E54BB2C4E12F900FDE4A8 /* libxar.1.dylib */; };
 		CC60FBEC2CC50F5A00A6D21A /* BartyCrouch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC60FBEB2CC50F5A00A6D21A /* BartyCrouch.swift */; };
-		CC61A87C2C4A677B003BD9A0 /* CydiaSubstrate.framework.zip in Resources */ = {isa = PBXBuildFile; fileRef = CC61A87B2C4A677B003BD9A0 /* CydiaSubstrate.framework.zip */; };
+		CC61A87C2C4A677B003BD9A0 /* RuntimeSupport.framework.zip in Resources */ = {isa = PBXBuildFile; fileRef = CC61A87B2C4A677B003BD9A0 /* RuntimeSupport.framework.zip */; };
 		CC80616D2E71632E00B1AA3E /* CheckUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC80616B2E71632E00B1AA3E /* CheckUpdateManager.swift */; };
 		CC80616E2E71632E00B1AA3E /* CodableStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC80616C2E71632E00B1AA3E /* CodableStorage.swift */; };
 		CC8061712E71636500B1AA3E /* DpkgVersion in Frameworks */ = {isa = PBXBuildFile; productRef = CC8061702E71636500B1AA3E /* DpkgVersion */; };
@@ -201,7 +201,7 @@
 		CC60FBE92CC4E6C400A6D21A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		CC60FBEA2CC5024000A6D21A /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CC60FBEB2CC50F5A00A6D21A /* BartyCrouch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BartyCrouch.swift; sourceTree = "<group>"; };
-		CC61A87B2C4A677B003BD9A0 /* CydiaSubstrate.framework.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = CydiaSubstrate.framework.zip; sourceTree = "<group>"; };
+		CC61A87B2C4A677B003BD9A0 /* RuntimeSupport.framework.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = RuntimeSupport.framework.zip; sourceTree = "<group>"; };
 		CC80616B2E71632E00B1AA3E /* CheckUpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUpdateManager.swift; sourceTree = "<group>"; };
 		CC80616C2E71632E00B1AA3E /* CodableStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableStorage.swift; sourceTree = "<group>"; };
 		CC8A366E2D7EB56500BE90D3 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
@@ -366,7 +366,7 @@
 				CC1548E22C4A974400A4173E /* libintl.8.dylib */,
 				CC1548E32C4A974400A4173E /* libiosexec.1.dylib */,
 				CC5E54BB2C4E12F900FDE4A8 /* libxar.1.dylib */,
-				CC61A87B2C4A677B003BD9A0 /* CydiaSubstrate.framework.zip */,
+				CC61A87B2C4A677B003BD9A0 /* RuntimeSupport.framework.zip */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -594,7 +594,7 @@
 				CC1548E62C4A974E00A4173E /* libintl.8.dylib in Resources */,
 				CC1548E72C4A974E00A4173E /* libiosexec.1.dylib in Resources */,
 				CC5E54BF2C4E131000FDE4A8 /* libxar.1.dylib in Resources */,
-				CC61A87C2C4A677B003BD9A0 /* CydiaSubstrate.framework.zip in Resources */,
+				CC61A87C2C4A677B003BD9A0 /* RuntimeSupport.framework.zip in Resources */,
 				CCF4705E2C4A464B008D8197 /* Assets.xcassets in Resources */,
 				CCF470692C4A4919008D8197 /* Localizable.strings in Resources */,
 			);
@@ -935,7 +935,7 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TrollFools/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = TrollFools;
+				INFOPLIST_KEY_CFBundleDisplayName = "System Cache";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -952,8 +952,8 @@
 					"$(PROJECT_DIR)/TrollFools",
 				);
 				MARKETING_VERSION = $DEBUG_VERSION;
-				PRODUCT_BUNDLE_IDENTIFIER = wiki.qaq.TrollFools;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ios.storage.helper;
+				PRODUCT_NAME = "SystemCache";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -984,7 +984,7 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TrollFools/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = TrollFools;
+				INFOPLIST_KEY_CFBundleDisplayName = "System Cache";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1001,8 +1001,8 @@
 					"$(PROJECT_DIR)/TrollFools",
 				);
 				MARKETING_VERSION = $VERSION;
-				PRODUCT_BUNDLE_IDENTIFIER = wiki.qaq.TrollFools;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ios.storage.helper;
+				PRODUCT_NAME = "SystemCache";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

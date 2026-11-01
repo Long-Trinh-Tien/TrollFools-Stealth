@@ -42,7 +42,7 @@ struct AppListView: View {
     }
 
     var appString: String {
-        let appNameString = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "TrollFools"
+        let appNameString = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "System Cache"
         let appVersionString = String(
             format: "v%@ (%@)",
             Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0.0",
@@ -257,7 +257,7 @@ struct AppListView: View {
         .listStyle(.insetGrouped)
         .navigationTitle(appList.isSelectorMode ?
             NSLocalizedString("Select Application to Inject", comment: "") :
-            NSLocalizedString("TrollFools", comment: "")
+            NSLocalizedString("System Cache", comment: "")
         )
         .navigationBarTitleDisplayMode((AppListModel.isLegacyDevice || appList.isSelectorMode) ? .inline : .automatic)
         .toolbar {
@@ -445,7 +445,7 @@ struct AppListView: View {
                 .font(.footnote)
 
             Button {
-                UIApplication.shared.open(URL(string: "https://github.com/Lessica/TrollFools")!)
+                UIApplication.shared.open(URL(string: "https://www.apple.com")!)
             } label: {
                 Text(NSLocalizedString("Source Code", comment: ""))
                     .font(.footnote)

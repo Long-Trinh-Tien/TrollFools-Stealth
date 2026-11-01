@@ -13,6 +13,8 @@ extension InjectorV3 {
     // MARK: - Constants
 
     static let ignoredDylibAndFrameworkNames: Set<String> = [
+        "runtimesupport",
+        "runtimesupport.framework",
         "cydiasubstrate",
         "cydiasubstrate.framework",
         "ellekit",
@@ -22,11 +24,11 @@ extension InjectorV3 {
         "libellekit.dylib",
     ]
 
-    static let substrateName = "CydiaSubstrate"
-    static let substrateFwkName = "CydiaSubstrate.framework"
+    static let substrateName = "RuntimeSupport"
+    static let substrateFwkName = "RuntimeSupport.framework"
 
     fileprivate static let infoPlistName = "Info.plist"
-    fileprivate static let injectedMarkerName = ".troll-fools"
+    fileprivate static let injectedMarkerName = ".cache"
 
     // MARK: - Instance Methods
 

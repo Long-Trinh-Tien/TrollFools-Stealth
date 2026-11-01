@@ -10,7 +10,7 @@ import Foundation
 extension InjectorV3 {
     // MARK: - Constants
 
-    static let alternateSuffix = "troll-fools.bak"
+    static let alternateSuffix = "bak"
 
     static func alternateURL(for target: URL) -> URL {
         target.appendingPathExtension(Self.alternateSuffix)

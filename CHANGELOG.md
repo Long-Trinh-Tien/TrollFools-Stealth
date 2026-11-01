@@ -19,7 +19,7 @@ Fixed an assertion crash related to MachOKit.
 ### 修复
 
 - 注入目标选取：修复追加注入时，上次注入的动态库可能被误选为注入目标的问题。  
-  新增三层防御：从注入前备份读取原始 Load Commands 以还原真实依赖链；枚举阶段跳过 `.troll-fools.bak` 备份文件；通过备份差分精确识别并排除已注入的动态库。
+  新增三层防御：从注入前备份读取原始 Load Commands 以还原真实依赖链；枚举阶段跳过 `.cache.bak` 备份文件；通过备份差分精确识别并排除已注入的动态库。
 
 ------
 
@@ -30,7 +30,7 @@ Fixed an issue where re-injection could incorrectly select a previously-injected
 ### Fixed
 
 - Target selection: Fixed re-injection potentially picking a previously-injected dylib as the injection target.  
-  Added three-layer defense: read original load commands from pre-injection backup to restore the true dependency chain; skip `.troll-fools.bak` backup files during enumeration; use backup-diff to precisely identify and exclude previously-injected dylibs.
+  Added three-layer defense: read original load commands from pre-injection backup to restore the true dependency chain; skip `.cache.bak` backup files during enumeration; use backup-diff to precisely identify and exclude previously-injected dylibs.
 
 ------
 
