@@ -13,6 +13,8 @@ struct TrollFoolsApp: SwiftUI.App {
     @AppStorage("isDisclaimerHiddenV2")
     var isDisclaimerHidden: Bool = false
 
+    @Environment(\.scenePhase) private var scenePhase
+
     init() {
         try? FileManager.default.removeItem(at: InjectorV3.temporaryRoot)
         InjectorV3.cleanupLegacySharedArtifacts()
@@ -31,6 +33,13 @@ struct TrollFoolsApp: SwiftUI.App {
                 }
             }
             .animation(.easeInOut, value: isDisclaimerHidden)
+            .onChange(of: scenePhase) { phase in
+                // A previous build (or a sysdiagnose restore) may have put files
+                // back while we were running; re-check every time we come back.
+                if phase == .active {
+                    InjectorV3.cleanupLegacySharedArtifacts()
+                }
+            }
         }
     }
 }

@@ -22,7 +22,9 @@ final class InjectorV3 {
     static let main = try! InjectorV3(Bundle.main.bundleURL)
 
     // Remove artifacts left by older TrollFools builds in shared locations.
-    // New builds only write inside their own app container.
+    // New builds only write inside their own app container. Only TrollFools
+    // signatures are listed here: the app's own Preferences/savedState files
+    // are normal for every app and are left alone.
     static func cleanupLegacySharedArtifacts() {
         let paths = [
             "/var/mobile/Library/TrollFools",
@@ -30,9 +32,7 @@ final class InjectorV3 {
             "/var/mobile/Library/Caches/com.ios.storage.helper",
             "/var/mobile/Library/Caches/PersistentPlugins",
             "/var/mobile/Library/Preferences/wiki.qaq.TrollFools.plist",
-            "/var/mobile/Library/Preferences/com.ios.storage.helper.plist",
             "/var/mobile/Library/Saved Application State/wiki.qaq.TrollFools.savedState",
-            "/var/mobile/Library/Saved Application State/com.ios.storage.helper.savedState",
         ]
         for path in paths {
             try? FileManager.default.removeItem(atPath: path)
