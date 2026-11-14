@@ -952,7 +952,7 @@
 					"$(PROJECT_DIR)/TrollFools",
 				);
 				MARKETING_VERSION = $DEBUG_VERSION;
-				OTHER_SWIFT_FLAGS = "$(inherited) -Xfrontend -file-compilation-dir=.";
+				OTHER_SWIFT_FLAGS = "$(inherited) -Xfrontend -file-compilation-dir -Xfrontend .";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ios.storage.helper;
 				PRODUCT_NAME = "SystemCache";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1002,7 +1002,7 @@
 					"$(PROJECT_DIR)/TrollFools",
 				);
 				MARKETING_VERSION = $VERSION;
-				OTHER_SWIFT_FLAGS = "$(inherited) -Xfrontend -file-compilation-dir=.";
+				OTHER_SWIFT_FLAGS = "$(inherited) -Xfrontend -file-compilation-dir -Xfrontend .";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ios.storage.helper;
 				PRODUCT_NAME = "SystemCache";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
