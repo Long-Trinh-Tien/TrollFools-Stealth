@@ -95,8 +95,7 @@ final class InjectorV3 {
     private func setupLoggers() {
         // All logging disabled to avoid leaving any detectable log artifacts.
         // (No file logs, no unified/OS logs.)
-
-        DDLogWarn("Logger setup \(appID!)", asynchronous: false, ddlog: logger)
+        logger.logLevel = .off
     }
 
     var latestLogFileURL: URL? {

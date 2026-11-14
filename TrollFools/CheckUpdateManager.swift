@@ -9,7 +9,6 @@ import Combine
 import DpkgVersion
 import Foundation
 
-private let TTAAGG = "CheckUpdateManager"
 
 /// 统一叫做 CheckUpdate
 /// 不要用 Upgrade/Updates/CheckForUpdates/UpdateCheck
@@ -37,7 +36,6 @@ final class CheckUpdateManager {
     private var lastCheckUpdateAt: Date {
         didSet {
             if lastCheckUpdateAt != oldValue {
-                print("\(TTAAGG) : Check update at: \(lastCheckUpdateAt)")
             }
         }
     }
@@ -47,7 +45,6 @@ final class CheckUpdateManager {
         didSet {
             latestVersionSubject.send(lastCheckUpdateResult)
             if let lastCheckUpdateResult {
-                print("\(TTAAGG) : Latest version: \(String(describing: lastCheckUpdateResult))")
             }
         }
     }
@@ -56,7 +53,6 @@ final class CheckUpdateManager {
     private var blockCheckUpdateAlertUntil: Date {
         didSet {
             if blockCheckUpdateAlertUntil != oldValue {
-                print("\(TTAAGG) : Block check update alert until: \(blockCheckUpdateAlertUntil)")
             }
         }
     }
@@ -81,7 +77,6 @@ final class CheckUpdateManager {
     private init() {
         latestVersionSubject.send(lastCheckUpdateResult)
         let trollStore = checkTrollStoreAvailability()
-        print("\(TTAAGG) : TrollStore availability: \(trollStore)")
     }
 
     // MARK: - Public Methods
@@ -95,7 +90,6 @@ final class CheckUpdateManager {
     /// - Parameter completion: 完成回调
     func checkUpdateIfNeeded(completion: ((LatestVersion?, Error?) -> Void)? = nil) {
         guard isCheckUpdateNeeded else {
-            print("\(TTAAGG) : Check update is not needed.")
             if isNewVersionAvailable {
                 completion?(lastCheckUpdateResult, nil)
             } else {
@@ -186,19 +180,16 @@ final class CheckUpdateManager {
     ///   - completion: 完成回调
     private func handleUpdateCheckResponse(jsonData: Data?, error: Error?, completion: ((LatestVersion?, Error?) -> Void)?) {
         if let error {
-            print("\(TTAAGG) : Check update failed: \(error)")
             completion?(nil, error)
             return
         }
 
         guard let jsonData else {
-            print("\(TTAAGG) : Check update failed: No response data.")
             completion?(nil, error)
             return
         }
 
         guard let versionList = try? JSONSerialization.jsonObject(with: jsonData) as? [[String: AnyHashable]] else {
-            print("\(TTAAGG) : Check update failed: Invalid response data.")
             completion?(nil, error)
             return
         }
@@ -206,13 +197,11 @@ final class CheckUpdateManager {
         if let latestVersion = parseLatestVersion(from: versionList) {
             lastCheckUpdateResult = latestVersion
             guard Version.compare(latestVersion.tagName, currentVersionCompareKey) > 0 else {
-                print("\(TTAAGG) : No new version available. Current version is up to date.")
                 completion?(nil, nil)
                 return
             }
             completion?(latestVersion, nil)
         } else {
-            print("\(TTAAGG) : Check update failed: No available version.")
             completion?(nil, nil)
         }
     }
@@ -295,7 +284,6 @@ final class CheckUpdateManager {
         guard let latestVersionString = latestTagComponents.first,
               let latestVersionBuild = latestTagComponents.last
         else {
-            print("\(TTAAGG) : Check update failed: Invalid version.")
             return nil
         }
 

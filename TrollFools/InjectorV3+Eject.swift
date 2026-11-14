@@ -42,6 +42,9 @@ extension InjectorV3 {
 
         try ejectDylibsAndFrameworks(assetURLs
             .filter { $0.pathExtension.lowercased() == "dylib" || $0.pathExtension.lowercased() == "framework" })
+
+        // Never leave shared-directory artifacts behind for a RASP to find.
+        Self.cleanupLegacySharedArtifacts()
     }
 
     // MARK: - Private Methods
