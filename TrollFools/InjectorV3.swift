@@ -24,7 +24,9 @@ final class InjectorV3 {
     // Remove artifacts left by older TrollFools builds in shared locations.
     // New builds only write inside their own app container. Only TrollFools
     // signatures are listed here: the app's own Preferences/savedState files
-    // are normal for every app and are left alone.
+    // are normal for every app and are left alone. HTTPStorages and Cookies
+    // are not listed either: CFNetwork creates them for every app and
+    // recreates them after the first request, so deleting them hides nothing.
     static func cleanupLegacySharedArtifacts() {
         let paths = [
             "/var/mobile/Library/TrollFools",
@@ -33,10 +35,6 @@ final class InjectorV3 {
             "/var/mobile/Library/Caches/PersistentPlugins",
             "/var/mobile/Library/Preferences/wiki.qaq.TrollFools.plist",
             "/var/mobile/Library/Saved Application State/wiki.qaq.TrollFools.savedState",
-            // iOS puts these two in the shared Library for every app that uses
-            // URLSession/cookies. They carry our bundle id, so keep them empty.
-            "/var/mobile/Library/HTTPStorages/com.ios.storage.helper",
-            "/var/mobile/Library/Cookies/com.ios.storage.helper.binarycookies",
         ]
         for path in paths {
             try? FileManager.default.removeItem(atPath: path)
