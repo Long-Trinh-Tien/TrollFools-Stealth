@@ -4,8 +4,8 @@
 - App display name: TrollFools -> System Cache
 - Persistent plugins dir: shared /var/mobile/Library/... -> app's own data container (Library/Application Support/PersistentPlugins)
 - Temporary injection dir: app's own data container (Library/Caches/<bundle-id>/InjectorV3)
-- Injected marker: .troll-fools -> .cache
-- Backup suffix: troll-fools.bak -> bak
+- Injected marker: legacy name -> .cache
+- Backup suffix: legacy name -> bak
 - Substrate framework: CydiaSubstrate -> RuntimeSupport (zip + constants + ignored names)
 - App list filter excludes com.ios.storage. prefix
 - All logging fully disabled (no file logs, no unified/OS logs)
@@ -13,6 +13,15 @@
 - devkit/cleanup_after_uninstall.sh removes leftovers if TrollStore leaves the data container
 
 Build with Xcode on macOS; not buildable on Windows.
+
+## 19/11/2026 - eject compatibility for old injections
+
+- Eject now accepts both the current `.bak` suffix and the legacy suffix (decoded at runtime, not present as a contiguous string).
+- A legacy backup is migrated to `.bak` even when only part of the injection is ejected.
+- When the last injected asset is removed, both `RuntimeSupport.framework` and the legacy `CydiaSubstrate.framework` are removed.
+- Legacy marker files are deleted from the target bundle after eject.
+- `checkIsInjectedAppBundle` recognizes both substrate layouts.
+
 
 ## 14/11/2026 - crash khi inject: fat slice lệch 2 byte
 

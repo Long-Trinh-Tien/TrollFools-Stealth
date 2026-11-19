@@ -26,6 +26,7 @@ extension InjectorV3 {
 
     static let substrateName = "RuntimeSupport"
     static let substrateFwkName = "RuntimeSupport.framework"
+    static let legacySubstrateFwkName = "CydiaSubstrate.framework"
 
     fileprivate static let infoPlistName = "Info.plist"
     fileprivate static let injectedMarkerName = ".cache"
@@ -126,7 +127,8 @@ extension InjectorV3 {
         var injectedAssetNames = Set<String>()
         for machO in (enumeratedMachOs.elements + [executableURL]) where hasAlternate(machO) {
             if let current = try? loadedDylibsOfMachO(machO),
-               let original = try? loadedDylibsOfMachO(Self.alternateURL(for: machO))
+               let alternate = existingAlternateURL(for: machO),
+               let original = try? loadedDylibsOfMachO(alternate)
             {
                 for name in current where !original.contains(name) {
                     injectedAssetNames.insert(URL(fileURLWithPath: name).lastPathComponent)
@@ -339,8 +341,10 @@ extension InjectorV3 {
 
         let frameworksURL = target.appendingPathComponent("Frameworks")
         let substrateFwkURL = frameworksURL.appendingPathComponent(Self.substrateFwkName)
+        let legacySubstrateFwkURL = frameworksURL.appendingPathComponent(Self.legacySubstrateFwkName)
 
         return FileManager.default.fileExists(atPath: substrateFwkURL.path)
+            || FileManager.default.fileExists(atPath: legacySubstrateFwkURL.path)
     }
 
     func checkIsInjectedBundle(_ target: URL) -> Bool {
