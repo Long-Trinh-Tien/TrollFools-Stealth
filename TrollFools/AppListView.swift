@@ -127,13 +127,9 @@ struct AppListView: View {
                     isAdvertisementHidden = false
                 }
 
-                CheckUpdateManager.shared.checkUpdateIfNeeded { latestVersion, _ in
-                    DispatchQueue.main.async {
-                        withAnimation {
-                            latestVersionString = latestVersion?.tagName
-                        }
-                    }
-                }
+                // Update check disabled: a stealth build must not call out to
+                // GitHub or print anything about its own identity.
+                _ = latestVersionString
             }
     }
 

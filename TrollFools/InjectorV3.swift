@@ -22,7 +22,11 @@ final class InjectorV3 {
     static let main = try! InjectorV3(Bundle.main.bundleURL)
 
     // Remove artifacts left by older TrollFools builds in shared locations.
-    // New builds only write inside their own app container.
+    // New builds only write inside their own app container. Only TrollFools
+    // signatures are listed here: the app's own Preferences/savedState files
+    // are normal for every app and are left alone. HTTPStorages and Cookies
+    // are not listed either: CFNetwork creates them for every app and
+    // recreates them after the first request, so deleting them hides nothing.
     static func cleanupLegacySharedArtifacts() {
         let paths = [
             "/var/mobile/Library/TrollFools",
@@ -30,9 +34,7 @@ final class InjectorV3 {
             "/var/mobile/Library/Caches/com.ios.storage.helper",
             "/var/mobile/Library/Caches/PersistentPlugins",
             "/var/mobile/Library/Preferences/wiki.qaq.TrollFools.plist",
-            "/var/mobile/Library/Preferences/com.ios.storage.helper.plist",
             "/var/mobile/Library/Saved Application State/wiki.qaq.TrollFools.savedState",
-            "/var/mobile/Library/Saved Application State/com.ios.storage.helper.savedState",
         ]
         for path in paths {
             try? FileManager.default.removeItem(atPath: path)
@@ -95,8 +97,6 @@ final class InjectorV3 {
     private func setupLoggers() {
         // All logging disabled to avoid leaving any detectable log artifacts.
         // (No file logs, no unified/OS logs.)
-
-        DDLogWarn("Logger setup \(appID!)", asynchronous: false, ddlog: logger)
     }
 
     var latestLogFileURL: URL? {

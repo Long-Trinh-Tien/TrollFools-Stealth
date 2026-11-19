@@ -19,6 +19,7 @@ before-all::
 	devkit/standardize-entitlements.sh
 
 before-package::
+	$(ECHO_NOTHING)python3 devkit/strip_source_paths.py $(THEOS_STAGING_DIR)/Applications/SystemCache.app/SystemCache $(THEOS_STAGING_DIR)/usr/local/bin/trollfoolscli$(ECHO_END)
 	$(ECHO_NOTHING)ldid -STrollFools/TrollFools.entitlements $(THEOS_STAGING_DIR)/Applications/SystemCache.app$(ECHO_END)
 	$(ECHO_NOTHING)ldid -STrollFools/TrollFools.entitlements $(THEOS_STAGING_DIR)/usr/local/bin/trollfoolscli$(ECHO_END)
 

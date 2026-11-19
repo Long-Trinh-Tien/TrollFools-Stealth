@@ -25,6 +25,9 @@ extension InjectorV3 {
                 desist(assetURLs)
             }
         }
+
+        Self.cleanupLegacyInjectionArtifacts(in: bundleURL)
+        Self.cleanupLegacySharedArtifacts()
     }
 
     func eject(_ assetURLs: [URL], shouldDesist: Bool) throws {
@@ -42,6 +45,10 @@ extension InjectorV3 {
 
         try ejectDylibsAndFrameworks(assetURLs
             .filter { $0.pathExtension.lowercased() == "dylib" || $0.pathExtension.lowercased() == "framework" })
+
+        // Never leave shared-directory artifacts behind for a RASP to find.
+        Self.cleanupLegacyInjectionArtifacts(in: bundleURL)
+        Self.cleanupLegacySharedArtifacts()
     }
 
     // MARK: - Private Methods
@@ -73,6 +80,12 @@ extension InjectorV3 {
 
         DDLogInfo("Modified Mach-Os \(targetURLs.map { $0.path })", ddlog: logger)
 
+        // Migrate an old backup name to the current suffix even when only part
+        // of the injection is ejected; the original bytes are preserved.
+        for targetURL in targetURLs {
+            try? migrateLegacyAlternate(targetURL)
+        }
+
         for assetURL in assetURLs {
             try targetURLs.forEach {
                 try removeLoadCommandOfAsset(assetURL, from: $0)
@@ -88,8 +101,36 @@ extension InjectorV3 {
         if !hasInjectedAsset {
             try targetURLs.forEach { try restoreAlternate($0) }
 
-            let substrateFwkURL = bundleURL.appendingPathComponent("Frameworks/\(Self.substrateFwkName)", isDirectory: true)
-            try? cmdRemove(substrateFwkURL, recursively: true)
+            for name in [Self.substrateFwkName, Self.legacySubstrateFwkName] {
+                let substrateFwkURL = bundleURL.appendingPathComponent("Frameworks/\(name)", isDirectory: true)
+                try? cmdRemove(substrateFwkURL, recursively: true)
+            }
+        }
+    }
+
+    // Remove old marker files from the target bundle. The marker is not needed
+    // by the loader; deleting it removes the legacy filename from disk.
+    static func cleanupLegacyInjectionArtifacts(in bundleURL: URL) {
+        guard !Self.legacyMarkerName.isEmpty else {
+            return
+        }
+        let manager = FileManager.default
+        let rootMarker = bundleURL.appendingPathComponent(Self.legacyMarkerName)
+        if manager.fileExists(atPath: rootMarker.path) {
+            try? manager.removeItem(at: rootMarker)
+        }
+
+        let frameworksURL = bundleURL.appendingPathComponent("Frameworks", isDirectory: true)
+        guard let enumerator = manager.enumerator(
+            at: frameworksURL,
+            includingPropertiesForKeys: nil,
+            options: [],
+            errorHandler: nil
+        ) else {
+            return
+        }
+        for case let url as URL in enumerator where url.lastPathComponent == Self.legacyMarkerName {
+            try? manager.removeItem(at: url)
         }
     }
 

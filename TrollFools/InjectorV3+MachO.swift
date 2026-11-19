@@ -68,7 +68,7 @@ extension InjectorV3 {
 
         // If the Mach-O has a backup (made before injection), read load commands
         // from the original to avoid picking up previously-injected dylibs.
-        let readTarget = hasAlternate(target) ? Self.alternateURL(for: target) : target
+        let readTarget = existingAlternateURL(for: target) ?? target
         let loadedDylibs = try loadedDylibsOfMachO(readTarget).compactMap({ resolveLoadCommand($0) })
         for dylib in loadedDylibs {
             newCollected = try linkedDylibsRecursivelyOfMachO(dylib, collected: newCollected)

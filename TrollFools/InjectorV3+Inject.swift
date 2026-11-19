@@ -43,6 +43,9 @@ extension InjectorV3 {
         if shouldPersist {
             try persist(preparedAssetURLs)
         }
+
+        // Never leave shared-directory artifacts behind for a RASP to find.
+        Self.cleanupLegacySharedArtifacts()
     }
 
     // MARK: - Private Methods
